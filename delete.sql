@@ -1,1 +1,1 @@
-DROP TABLE personne;
+DELETE FROM personne WHERE id=1;
