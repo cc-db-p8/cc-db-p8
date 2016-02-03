@@ -21,4 +21,7 @@ INSERT INTO adresse (id, personne_id, label, ville, code_postal) VALUES
 INSERT INTO adresse (id, personne_id, label, ville, code_postal) VALUES
   (NULL, 1, '5 rue de la contrainte', 'Paris', '75016');
 
-SELECT * FROM adresse;
+
+ALTER TABLE personne ADD sexe TEXT;
+ALTER TABLE adresse ADD cod_com INTEGER;
+
