@@ -1,3 +1,5 @@
+PRAGMA foreign_keys = ON;
+
 CREATE TABLE IF NOT EXISTS personne (
   id INTEGER PRIMARY KEY ASC,
   nom TEXT,
@@ -12,9 +14,11 @@ CREATE TABLE IF NOT EXISTS adresse (
   type_id INTEGER,
   personne_id INTEGER,
   label TEXT,
-  ville TEXT,
   cod_pos TEXT,
-  cod_com TEXT
+  cod_com TEXT,
+  FOREIGN KEY (personne_id) REFERENCES personne(id),
+  FOREIGN KEY (type_id) REFERENCES type_adresse(id),
+  FOREIGN KEY (cod_pos, cod_com) REFERENCES commune(cod_pos, cod_com)
 );
 
 CREATE TABLE type_adresse(
@@ -22,7 +26,7 @@ CREATE TABLE type_adresse(
   label TEXT
 );
 
-CREATE TABLE IF NOT EXISTS cod_com(
+CREATE TABLE IF NOT EXISTS commune(
   cod_com TEXT,
   cod_pos TEXT,
   label TEXT,
