@@ -3,21 +3,16 @@
 import sqlite3
 conn = sqlite3.connect('exemple.db')
 
-c = conn.cursor()
+cursor = conn.cursor()
 
-c.execute("SELECT * FROM personne")
+cursor.execute("""SELECT p.nom, a.type_id, ta.label, a.label, a.cod_pos, a.cod_com FROM personne p, adresse a, type_adresse ta
+WHERE p.id=a.personne_id and a.type_id=ta.id""")
 
-print c.fetchall()
+for x in cursor.fetchall():
+    print x
 
-query = [["GUICHON{}".format(x), "PAUL{}".format(x)] for x in range(20)]
+cursor.execute("""SELECT p.nom, a.type_id, ta.label, a.label, a.cod_pos, a.cod_com FROM personne p
+    INNER JOIN  adresse a ON p.id=a.personne_id LEFT JOIN type_adresse ta ON a.type_id=ta.id""")
 
-
-print query
-c.executemany('INSERT INTO personne (nom, prenom) VALUES (?, ?)', query)
-conn.commit()
-#
-# c.execute("SELECT * FROM personne")
-#
-# print c.fetchall()
-#
-# conn.close()
+for x in cursor.fetchall():
+    print x
