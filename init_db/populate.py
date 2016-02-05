@@ -62,3 +62,5 @@ def init(db_name):
     conn.commit()
     init_adresse(cursor)
     conn.commit()
+
+    conn.close()
