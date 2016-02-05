@@ -2,26 +2,31 @@ CREATE TABLE IF NOT EXISTS personne (
   id INTEGER PRIMARY KEY ASC,
   nom TEXT,
   prenom TEXT,
+  sexe TEXT,
+  email TEXT UNIQUE,
   date_naissance TEXT
 );
 
 CREATE TABLE IF NOT EXISTS adresse (
   id INTEGER PRIMARY KEY ASC,
+  type_id INTEGER,
   personne_id INTEGER,
   label TEXT,
   ville TEXT,
-  code_postal INT
+  cod_pos TEXT,
+  cod_com TEXT
 );
 
+CREATE TABLE type_adresse(
+  id INTEGER PRIMARY KEY ASC,
+  label TEXT
+);
 
-INSERT INTO personne (id, nom, prenom, date_naissance) VALUES (NULL , 'Guichon', 'Paul', NULL );
-INSERT INTO adresse (id, personne_id, label, ville, code_postal) VALUES
-  (NULL, 1, '2 rue de la liberté', 'st denie', '93500');
+CREATE TABLE IF NOT EXISTS cod_com(
+  cod_com TEXT,
+  cod_pos TEXT,
+  label TEXT,
+  PRIMARY KEY(cod_com, cod_pos)
+);
 
-INSERT INTO adresse (id, personne_id, label, ville, code_postal) VALUES
-  (NULL, 1, '5 rue de la contrainte', 'Paris', '75016');
-
-
-ALTER TABLE personne ADD sexe TEXT;
-ALTER TABLE adresse ADD cod_com INTEGER;
 
