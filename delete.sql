@@ -1,1 +1,0 @@
-DELETE FROM personne WHERE id=1;

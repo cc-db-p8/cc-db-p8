@@ -1,12 +1,12 @@
 # coding=utf-8
 from subprocess import call
 from populate import init
-DB_NAME = 'exemple.db'
+DB_NAME = 'blog.db'
 try:
     call(['rm {}'.format(DB_NAME)], shell=True)
 except OSError as e:
-    print(e.message)
+    pass
 
-call(['sqlite3 exemple.db < init_db/init.sql'], shell=True)
+call(['sqlite3 {} < blog/init_db/init.sql'.format(DB_NAME)], shell=True)
 
-init(DB_NAME)
+# init(DB_NAME)
