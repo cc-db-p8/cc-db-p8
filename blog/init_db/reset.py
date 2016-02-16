@@ -1,6 +1,5 @@
 # coding=utf-8
 from subprocess import call
-from populate import init
 DB_NAME = 'blog.db'
 try:
     call(['rm {}'.format(DB_NAME)], shell=True)

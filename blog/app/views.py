@@ -1,8 +1,9 @@
 # coding=utf-8
-from flask import Flask, url_for
-
+from flask import Flask, url_for, render_template
+import models
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    user = models.select_user('paul')
+    return render_template('index.html', user=user)
