@@ -5,5 +5,5 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    user = models.select_user('paul')
+    user = models.User.get_user('paul')
     return render_template('index.html', user=user)

@@ -14,21 +14,37 @@ def get_db():
     return g.sqlite_db
 
 
-def insert_user(username, password, email):
-    db = get_db()
-    db.execute("""INSERT INTO user (username, password, email) VALUES (?, ? ,?)""", [username, password, email])
-    db.commit()
+class User(object):
+    """
+    Class permettant de manipuler la table User
+    """
+    @classmethod
+    def insert(cls, username, password, email):
+        db = get_db()
+        db.execute("""INSERT INTO user (username, password, email) VALUES (?, ? ,?)""", [username, password, email])
+        db.commit()
 
+    @classmethod
+    def inserts(cls, users):
+        """
+        :param users:
+        :type users: tableau d'user [[username, password, email]]
+        :return:
+        :rtype:
+        """
+        db = get_db()
+        db.execute("""INSERT INTO user (username, password, email) VALUES (?, ? ,?)""", users)
+        db.commit()
 
-def select_user(username):
-    db = get_db()
-    cur = db.execute("""SELECT id, username, email FROM user WHERE username=?""", [username])
-    result = cur.fetchone()
-    if result:
-        result = {
-            'id': result[0],
-            'username': result[1],
-            'email': result[2]
-        }
-    return result
-
+    @classmethod
+    def get_user(cls, username):
+        db = get_db()
+        cur = db.execute("""SELECT id, username, email FROM user WHERE username=?""", [username])
+        result = cur.fetchone()
+        if result:
+            result = {
+                'id': result[0],
+                'username': result[1],
+                'email': result[2]
+            }
+        return result
