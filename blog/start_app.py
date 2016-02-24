@@ -4,11 +4,12 @@ from flask import g
 try:
     import local_setings
 except ImportError:
-    local_setings = {}
+    local_setings = object
 
-HOST = local_setings.get('HOST', '0.0.0.0')
-PORT = local_setings.get('PORT', 8000)
-DEBUG = local_setings.get('DEBUG', True)
+HOST = getattr(local_setings, 'HOST', '0.0.0.0')
+PORT = getattr(local_setings, 'PORT', 8000)
+DEBUG = getattr(local_setings, 'DEBUG', True)
+
 
 @app.teardown_appcontext
 def close_connection(exception):

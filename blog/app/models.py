@@ -21,8 +21,12 @@ class User(object):
     @classmethod
     def insert(cls, username, password, email):
         db = get_db()
-        db.execute("""INSERT INTO user (username, password, email) VALUES (?, ? ,?)""", [username, password, email])
-        db.commit()
+        try:
+            db.execute("""INSERT INTO user (username, password, email) VALUES (?, ? ,?)""", [username, password, email])
+            db.commit()
+        except sqlite3.IntegrityError as error:
+            print "erreur lors de l'insertion de {username} : {message}".format(username=username,
+                                                                                message=error.message)
 
     @classmethod
     def inserts(cls, users):
@@ -48,3 +52,4 @@ class User(object):
                 'email': result[2]
             }
         return result
+
