@@ -13,7 +13,6 @@ def get_db():
         g.sqlite_db = connect_db()
     return g.sqlite_db
 
-
 class User(object):
     """
     Class permettant de manipuler la table User
@@ -48,3 +47,4 @@ class User(object):
                 'email': result[2]
             }
         return result
+
