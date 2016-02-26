@@ -20,8 +20,13 @@ class User(object):
     @classmethod
     def insert(cls, username, password, email):
         db = get_db()
-        db.execute("""INSERT INTO user (username, password, email) VALUES (?, ? ,?)""", [username, password, email])
-        db.commit()
+        try:
+            db.execute("""INSERT INTO user (username, password, email) VALUES (?, ? ,?)""", [username, password, email])
+            db.commit()
+        except sqlite3.IntegrityError as error:
+            print "insertion de {username} est impossible : raison {message}".format(username=username,
+                                                                                     message=error.message)
+
 
     @classmethod
     def inserts(cls, users):
@@ -48,3 +53,22 @@ class User(object):
             }
         return result
 
+
+class Post(object):
+    @classmethod
+    def insert(cls, username, titre, text):
+        db = get_db()
+        user = User.get_user(username)
+
+        db.execute("""INSERT INTO post (user_id, titre, text) VALUES (?, ? ,?)""",
+                   [user['id'], titre, text])
+        db.commit()
+
+    @classmethod
+    def get_posts(cls, username):
+        db = get_db()
+        cur = db.execute("""SELECT p.id, p.titre, p.text FROM post p INNER JOIN user u ON u.id = p.user_id
+        WHERE username=?""", [username])
+
+        result = cur.fetchall()
+        return [{'id':post[0], 'titre':post[1], 'text':post[2]} for post in result]
