@@ -72,3 +72,21 @@ class Post(object):
 
         result = cur.fetchall()
         return [{'id':post[0], 'titre':post[1], 'text':post[2]} for post in result]
+
+class Commentaire(object):
+    @classmethod
+    def insert(cls, post_id, user_id, titre, text):
+        db = get_db()
+        db.execute("""INSERT INTO commentaire (post_id, user_id, titre, text) VALUES (?, ?, ? ,?)""",
+                   [post_id, user_id, titre, text])
+        db.commit()
+
+    @classmethod
+    def get_commentaires(cls, post_id):
+        db = get_db()
+        cur = db.execute("""SELECT c.id, c.titre, c.text FROM commentaire c INNER JOIN post p ON p.id = c.post_id
+        WHERE post_id=?""", [post_id])
+
+        result = cur.fetchall()
+        return [{'id':post[0], 'titre':post[1], 'text':post[2]} for post in result]
+

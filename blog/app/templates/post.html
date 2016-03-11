@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>création de post</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css"></head>
+</head>
+<body>
+<div class="container">
+<form action="" method="post" class="form-horizontal">
+    <input type="text" name="titre" value="{{ form.titre }}"> {{errors.titre}}<br>
+    <textarea  name="contenu" value="">{{ form.contenu }} </textarea>{{errors.contenu}} <br>
+    <input class="btn btn-default" type="submit" value="Envoyer">
+    <a href="/" class="btn btn-primary">Retour</a>
+</form>
+</div>
+</body>
+</html>
