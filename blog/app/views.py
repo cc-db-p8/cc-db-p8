@@ -6,17 +6,22 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/<id>')
 def hello_world(id=None):
+    full = request.args.get('full', False)
     if request.method == 'GET':
         pass
     elif resquest.method == 'POST':
         pass
     user = models.User.get_user('toot')
+
     posts = models.Post.get_posts(user['username'])
     for post in posts:
         commentaires = models.Commentaire.get_commentaires(post['id'])
         post['commentaires'] = commentaires
         post['nb_com'] = len(commentaires)
-    return render_template('index.html', posts = posts)
+    return render_template('index.html',
+                           posts = posts,
+                           titre='mon titre',
+                           full=full)
 
 
 @app.route('/create_post', methods=['GET', 'POST'])

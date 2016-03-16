@@ -1,23 +1,26 @@
-<html>
-<head>
-    <link rel="stylesheet" href="/static/css/bootstrap.css"></head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-body">
             <h1>Bienvenu sur mon blog</h1>
-            <a href="/create_post" class="btn btn-primary">ajouter un post</a>
-            <table>
-                {% for post in posts %}
+            <a class="btn btn-default" href="/?full=True">Tout les posts</a>
+            <a class="btn btn-default" href="/">Paire</a>
 
+            <a href="/create_post" class="btn btn-primary">ajouter un post</a>
+            <table class="table table-bordered table-striped">
+                {% for post in posts %}
+                {% if not post.id % 2 or full %}
                 <tr>
+                    <td>{{ post.id }}</td>
                     <td>{{ post.titre}}</td>
                     <td>{{ post.text}}</td>
                 </tr>
+                {% endif %}
                 {% endfor %}
             </table>
         </div>
     </div>
 </div>
-</body>
-</html>
+{% endblock %}
